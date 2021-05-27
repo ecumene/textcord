@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -59,33 +58,26 @@ func SerializeDelete(m *discordgo.MessageDelete) ([]byte, error) {
 	})
 }
 
-func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if m.Author.ID == s.State.User.ID {
-		return
-	}
-
+func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) string {
 	b, err := SerializeCreate(m)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-
-	os.Stdout.Write(b)
+	return string(b)
 }
 
-func MessageDelete(s *discordgo.Session, m *discordgo.MessageDelete) {
+func MessageDelete(s *discordgo.Session, m *discordgo.MessageDelete) string {
 	b, err := SerializeDelete(m)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-
-	os.Stdout.Write(b)
+	return string(b)
 }
 
-func MessageEdit(s *discordgo.Session, m *discordgo.MessageEdit) {
+func MessageEdit(s *discordgo.Session, m *discordgo.MessageEdit) string {
 	b, err := SerializeEdit(m)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-
-	os.Stdout.Write(b)
+	return string(b)
 }
